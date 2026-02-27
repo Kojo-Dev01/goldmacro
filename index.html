@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Macro Fundamental Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- Grain overlay -->
+<div class="grain-overlay"></div>
+
+<!-- Navigation -->
+<nav class="nav-bar" id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <span class="nav-logo-icon">◆</span>
+      <span class="nav-logo-text">GOLD MACRO MODEL</span>
+    </div>
+    <div class="nav-links">
+      <a href="#composite" class="nav-link">Composite</a>
+      <a href="#drivers" class="nav-link">Drivers</a>
+      <a href="#charts" class="nav-link">Charts</a>
+      <a href="#signal" class="nav-link">Signal</a>
+      <a href="#flows" class="nav-link">Flows</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Section 1: Hero Header -->
+<header class="hero-section" id="hero">
+  <div class="hero-particles" id="heroParticles"></div>
+  <div class="hero-content">
+    <div class="hero-badge">INSTITUTIONAL GRADE &bull; MULTI-FACTOR ANALYSIS</div>
+    <h1 class="hero-title">
+      <span class="hero-title-line">Gold Macro</span>
+      <span class="hero-title-line hero-title-accent">Fundamental Model</span>
+    </h1>
+    <div class="hero-price-block">
+      <div class="hero-price-main">
+        <span class="hero-price-label">GOLD SPOT (COMEX) <span class="live-badge"><span class="live-dot"></span>LIVE</span></span>
+        <span class="hero-price-value" id="goldPriceTicker">$5,204<span class="hero-price-decimal">.00</span><span class="hero-price-unit">/oz</span></span>
+        <div class="price-delta" id="priceDelta">
+          <span class="delta-arrow" id="deltaArrow">&#9650;</span>
+          <span class="delta-value" id="deltaValue">+0.00</span>
+          <span class="delta-pct" id="deltaPct">(0.00%)</span>
+        </div>
+      </div>
+      <div class="hero-price-secondary">
+        <div class="price-chip">
+          <span class="chip-label">GLD</span>
+          <span class="chip-value">$477.48</span>
+        </div>
+        <div class="price-chip">
+          <span class="chip-label">Silver</span>
+          <span class="chip-value">$90.00</span>
+        </div>
+        <div class="price-chip">
+          <span class="chip-label">Au/Ag</span>
+          <span class="chip-value">58.86</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-timestamp">Last Updated: Feb 27, 2026 03:44 GMT</div>
+  </div>
+  <div class="hero-scroll-indicator">
+    <span>Scroll to explore</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</header>
+
+<!-- Section 2: Composite Score -->
+<section class="section" id="composite">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Composite Score</h2>
+    </div>
+    
+    <div class="composite-grid">
+      <div class="composite-gauge-container">
+        <div class="gauge-wrapper">
+          <canvas id="compositeGauge" width="320" height="320"></canvas>
+          <div class="gauge-center-text">
+            <span class="gauge-score">+3.10</span>
+            <span class="gauge-label">COMPOSITE</span>
+          </div>
+        </div>
+        <div class="signal-badge bullish">STRUCTURALLY BULLISH</div>
+        <div class="conviction-bar">
+          <span class="conviction-label">Conviction</span>
+          <div class="conviction-track">
+            <div class="conviction-fill" style="width: 75%"></div>
+          </div>
+          <span class="conviction-value">7.5 / 10</span>
+        </div>
+      </div>
+      
+      <div class="quick-stats-grid">
+        <div class="stat-card">
+          <span class="stat-icon">$</span>
+          <span class="stat-label">DXY</span>
+          <span class="stat-value">97.66</span>
+          <span class="stat-delta negative">-9.3% from high</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">⬆</span>
+          <span class="stat-label">US 10Y</span>
+          <span class="stat-value">4.05%</span>
+          <span class="stat-delta neutral">Nominal</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">◈</span>
+          <span class="stat-label">10Y Real</span>
+          <span class="stat-value">1.77%</span>
+          <span class="stat-delta positive">Declining</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">⚡</span>
+          <span class="stat-label">VIX</span>
+          <span class="stat-value">18.63</span>
+          <span class="stat-delta neutral">Moderate</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">◆</span>
+          <span class="stat-label">Au/Ag Ratio</span>
+          <span class="stat-value">58.86</span>
+          <span class="stat-delta neutral">Below avg</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">%</span>
+          <span class="stat-label">Fed Funds</span>
+          <span class="stat-value">3.64%</span>
+          <span class="stat-delta positive">Easing cycle</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: The 8 Macro Drivers -->
+<section class="section section-dark" id="drivers">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Macro Drivers</h2>
+      <p class="section-subtitle">8 fundamental factors scored -5 (bearish) to +5 (bullish)</p>
+    </div>
+
+    <div class="drivers-grid">
+      <!-- Driver 1: Real Interest Rates -->
+      <div class="driver-card" data-score="2">
+        <div class="driver-header" onclick="toggleDriver(this)">
+          <div class="driver-title-row">
+            <span class="driver-index">01</span>
+            <h3 class="driver-name">Real Interest Rates</h3>
+            <span class="driver-weight">20%</span>
+          </div>
+          <div class="driver-score-row">
+            <div class="score-bar-container">
+              <div class="score-bar-bg">
+                <div class="score-bar-center"></div>
+                <div class="score-bar-fill bullish" style="width: 20%; left: 50%;"></div>
+                <div class="score-marker" style="left: 70%"></div>
+              </div>
+              <div class="score-labels">
+                <span>-5</span><span>0</span><span>+5</span>
+              </div>
+            </div>
+            <span class="driver-score-value positive">+2</span>
+          </div>
+          <div class="driver-expand-icon">▾</div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-data">
+            <div class="data-point"><span class="data-label">10Y TIPS Real Yield</span><span class="data-val">1.77%</span></div>
+            <div class="data-point"><span class="data-label">5Y TIPS Real Yield</span><span class="data-val">1.19%</span></div>
+            <div class="data-point"><span class="data-label">Trend</span><span class="data-val positive">Declining from 2.5% highs</span></div>
+          </div>
+          <div class="driver-rationale">
+            <p>"10Y real yield at 1.77% down from 2.5% highs. Declining trajectory strongly bullish, but absolute level still restrains upside. Trend > Level."</p>
+          </div>
+          <div class="driver-verdict">MILDLY BULLISH — Real rates declining but still positive</div>
+        </div>
+      </div>
+
+      <!-- Driver 2: US Dollar -->
+      <div class="driver-card" data-score="3">
+        <div class="driver-header" onclick="toggleDriver(this)">
+          <div class="driver-title-row">
+            <span class="driver-index">02</span>
+            <h3 class="driver-name">US Dollar (DXY)</h3>
+            <span class="driver-weight">15%</span>
+          </div>
+          <div class="driver-score-row">
+            <div class="score-bar-container">
+              <div class="score-bar-bg">
+                <div class="score-bar-center"></div>
+                <div class="score-bar-fill bullish" style="width: 30%; left: 50%;"></div>
+                <div class="score-marker" style="left: 80%"></div>
+              </div>
+              <div class="score-labels">
+                <span>-5</span><span>0</span><span>+5</span>
+              </div>
+            </div>
+            <span class="driver-score-value positive">+3</span>
+          </div>
+          <div class="driver-expand-icon">▾</div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-data">
+            <div class="data-point"><span class="data-label">DXY Current</span><span class="data-val">97.66</span></div>
+            <div class="data-point"><span class="data-label">52-Week High</span><span class="data-val">107.56</span></div>
+            <div class="data-point"><span class="data-label">Decline from High</span><span class="data-val negative">-9.3%</span></div>
+          </div>
+          <div class="driver-rationale">
+            <p>"DXY collapsed from 107.66 to 97.66 (-9.3%). Fiscal deficit at 5.8% of GDP + debt-to-GDP heading to 120% by 2036. Structural dollar weakness is a strong tailwind for gold."</p>
+          </div>
+          <div class="driver-verdict">BULLISH — DXY in structural decline</div>
+        </div>
+      </div>
+
+      <!-- Driver 3: Central Bank Demand -->
+      <div class="driver-card" data-score="5">
+        <div class="driver-header" onclick="toggleDriver(this)">
+          <div class="driver-title-row">
+            <span class="driver-index">03</span>
+            <h3 class="driver-name">Central Bank Demand</h3>
+            <span class="driver-weight">20%</span>
+          </div>
+          <div class="driver-score-row">
+            <div class="score-bar-container">
+              <div class="score-bar-bg">
+                <div class="score-bar-center"></div>
+                <div class="score-bar-fill max-bullish" style="width: 50%; left: 50%;"></div>
+                <div class="score-marker" style="left: 100%"></div>
+              </div>
+              <div class="score-labels">
+                <span>-5</span><span>0</span><span>+5</span>
+              </div>
+            </div>
+            <span class="driver-score-value max-positive">+5</span>
+          </div>
+          <div class="driver-expand-icon">▾</div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-data">
+            <div class="data-point"><span class="data-label">2025 Purchases</span><span class="data-val">863 tonnes</span></div>
+            <div class="data-point"><span class="data-label">2026E Forecast</span><span class="data-val">800+ tonnes</span></div>
+            <div class="data-point"><span class="data-label">Net Buyers</span><span class="data-val">22 central banks</span></div>
+            <div class="data-point"><span class="data-label">CB Survey</span><span class="data-val">95% expect increase</span></div>
+          </div>
+          <div class="driver-rationale">
+            <p>"Central banks bought 863t in 2025, the 4th highest on record. Gold surpassed Treasuries as #1 reserve asset. 57% of purchases were opaque/unreported. This is structural de-dollarization, not cyclical."</p>
+          </div>
+          <div class="driver-verdict">MAX BULLISH — Unprecedented structural demand</div>
+        </div>
+      </div>
+
+      <!-- Driver 4: Fed Policy -->
+      <div class="driver-card" data-score="2">
+        <div class="driver-header" onclick="toggleDriver(this)">
+          <div class="driver-title-row">
+            <span class="driver-index">04</span>
+            <h3 class="driver-name">Fed Policy & Rate Expectations</h3>
+            <span class="driver-weight">15%</span>
+          </div>
+          <div class="driver-score-row">
+            <div class="score-bar-container">
+              <div class="score-bar-bg">
+                <div class="score-bar-center"></div>
+                <div class="score-bar-fill bullish" style="width: 20%; left: 50%;"></div>
+                <div class="score-marker" style="left: 70%"></div>
+              </div>
+              <div class="score-labels">
+                <span>-5</span><span>0</span><span>+5</span>
+              </div>
+            </div>
+            <span class="driver-score-value positive">+2</span>
+          </div>
+          <div class="driver-expand-icon">▾</div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-data">
+            <div class="data-point"><span class="data-label">Fed Funds Rate</span><span class="data-val">3.64%</span></div>
+            <div class="data-point"><span class="data-label">March Hold Prob.</span><span class="data-val">96%</span></div>
+            <div class="data-point"><span class="data-label">2+ Cuts by YE</span><span class="data-val">~70% prob.</span></div>
+            <div class="data-point"><span class="data-label">First 2026 Cut</span><span class="data-val">Jun–Jul expected</span></div>
+          </div>
+          <div class="driver-rationale">
+            <p>"Fed cut 100bps in late 2024, now paused. CPI at 2.4% (Jan 2026), approaching 2% target. Market pricing 2+ more cuts in 2026. Easing bias intact but timeline uncertain."</p>
+          </div>
+          <div class="driver-verdict">MILDLY BULLISH — Easing cycle paused but direction clear</div>
+        </div>
+      </div>
+
+      <!-- Driver 5: Inflation & Fiscal -->
+      <div class="driver-card" data-score="4">
+        <div class="driver-header" onclick="toggleDriver(this)">
+          <div class="driver-title-row">
+            <span class="driver-index">05</span>
+            <h3 class="driver-name">Inflation & Fiscal Dynamics</h3>
+            <span class="driver-weight">10%</span>
+          </div>
+          <div class="driver-score-row">
+            <div class="score-bar-container">
+              <div class="score-bar-bg">
+                <div class="score-bar-center"></div>
+                <div class="score-bar-fill bullish" style="width: 40%; left: 50%;"></div>
+                <div class="score-marker" style="left: 90%"></div>
+              </div>
+              <div class="score-labels">
+                <span>-5</span><span>0</span><span>+5</span>
+              </div>
+            </div>
+            <span class="driver-score-value positive">+4</span>
+          </div>
+          <div class="driver-expand-icon">▾</div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-data">
+            <div class="data-point"><span class="data-label">CPI YoY</span><span class="data-val">2.4%</span></div>
+            <div class="data-point"><span class="data-label">Core CPI</span><span class="data-val">2.5%</span></div>
+            <div class="data-point"><span class="data-label">FY2026 Deficit</span><span class="data-val">$1.9T (5.8% GDP)</span></div>
+            <div class="data-point"><span class="data-label">Debt-to-GDP</span><span class="data-val">→ 140% by 2031</span></div>
+          </div>
+          <div class="driver-rationale">
+            <p>"Headline inflation cooling to 2.4%, but the debasement trade is about debt, not CPI. $1.9T deficit, debt heading to 140% of GDP by 2031, interest payments alone will be $2.1T/yr by 2036. This is the structural case for gold as the ultimate hard asset."</p>
+          </div>
+          <div class="driver-verdict">STRONGLY BULLISH — Fiscal debasement thesis intact</div>
+        </div>
+      </div>
+
+      <!-- Driver 6: Geopolitical Risk -->
+      <div class="driver-card" data-score="3">
+        <div class="driver-header" onclick="toggleDriver(this)">
+          <div class="driver-title-row">
+            <span class="driver-index">06</span>
+            <h3 class="driver-name">Geopolitical Risk Premium</h3>
+            <span class="driver-weight">10%</span>
+          </div>
+          <div class="driver-score-row">
+            <div class="score-bar-container">
+              <div class="score-bar-bg">
+                <div class="score-bar-center"></div>
+                <div class="score-bar-fill bullish" style="width: 30%; left: 50%;"></div>
+                <div class="score-marker" style="left: 80%"></div>
+              </div>
+              <div class="score-labels">
+                <span>-5</span><span>0</span><span>+5</span>
+              </div>
+            </div>
+            <span class="driver-score-value positive">+3</span>
+          </div>
+          <div class="driver-expand-icon">▾</div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-data">
+            <div class="data-point"><span class="data-label">Iran Nuclear</span><span class="data-val negative">Escalating (3rd round)</span></div>
+            <div class="data-point"><span class="data-label">Tariff Policy</span><span class="data-val negative">High uncertainty</span></div>
+            <div class="data-point"><span class="data-label">VIX</span><span class="data-val">18.63</span></div>
+            <div class="data-point"><span class="data-label">Warsh Nomination</span><span class="data-val negative">Policy regime risk</span></div>
+          </div>
+          <div class="driver-rationale">
+            <p>"Iran nuclear tensions + tariff uncertainty + Warsh nomination creating policy regime shift risk. Multiple overlapping geopolitical risks supporting safe-haven bid. VIX at 18.63 suggests markets not fully pricing tail risks."</p>
+          </div>
+          <div class="driver-verdict">BULLISH — Multiple active risk premia</div>
+        </div>
+      </div>
+
+      <!-- Driver 7: ETF & Institutional Flows -->
+      <div class="driver-card" data-score="4">
+        <div class="driver-header" onclick="toggleDriver(this)">
+          <div class="driver-title-row">
+            <span class="driver-index">07</span>
+            <h3 class="driver-name">ETF & Institutional Flows</h3>
+            <span class="driver-weight">5%</span>
+          </div>
+          <div class="driver-score-row">
+            <div class="score-bar-container">
+              <div class="score-bar-bg">
+                <div class="score-bar-center"></div>
+                <div class="score-bar-fill bullish" style="width: 40%; left: 50%;"></div>
+                <div class="score-marker" style="left: 90%"></div>
+              </div>
+              <div class="score-labels">
+                <span>-5</span><span>0</span><span>+5</span>
+              </div>
+            </div>
+            <span class="driver-score-value positive">+4</span>
+          </div>
+          <div class="driver-expand-icon">▾</div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-data">
+            <div class="data-point"><span class="data-label">Jan 2026 Inflows</span><span class="data-val">$19B (record)</span></div>
+            <div class="data-point"><span class="data-label">Total AUM</span><span class="data-val">$669B ATH</span></div>
+            <div class="data-point"><span class="data-label">Holdings</span><span class="data-val">4,145 tonnes</span></div>
+            <div class="data-point"><span class="data-label">Trading Volume</span><span class="data-val">$623B/day</span></div>
+          </div>
+          <div class="driver-rationale">
+            <p>"Record $19B ETF inflows in January. AUM at $669B all-time high. This is institutional conviction, not retail FOMO. North America and Asia driving flows simultaneously."</p>
+          </div>
+          <div class="driver-verdict">STRONGLY BULLISH — Institutional momentum surging</div>
+        </div>
+      </div>
+
+      <!-- Driver 8: Supply Dynamics -->
+      <div class="driver-card" data-score="1">
+        <div class="driver-header" onclick="toggleDriver(this)">
+          <div class="driver-title-row">
+            <span class="driver-index">08</span>
+            <h3 class="driver-name">Supply Dynamics & Mine Production</h3>
+            <span class="driver-weight">5%</span>
+          </div>
+          <div class="driver-score-row">
+            <div class="score-bar-container">
+              <div class="score-bar-bg">
+                <div class="score-bar-center"></div>
+                <div class="score-bar-fill bullish" style="width: 10%; left: 50%;"></div>
+                <div class="score-marker" style="left: 60%"></div>
+              </div>
+              <div class="score-labels">
+                <span>-5</span><span>0</span><span>+5</span>
+              </div>
+            </div>
+            <span class="driver-score-value positive">+1</span>
+          </div>
+          <div class="driver-expand-icon">▾</div>
+        </div>
+        <div class="driver-body">
+          <div class="driver-data">
+            <div class="data-point"><span class="data-label">2024 Production</span><span class="data-val">3,645 tonnes</span></div>
+            <div class="data-point"><span class="data-label">2026E Growth</span><span class="data-val">+7% to 72.8M oz</span></div>
+            <div class="data-point"><span class="data-label">AISC</span><span class="data-val">~$1,521/oz</span></div>
+            <div class="data-point"><span class="data-label">Supply Lag</span><span class="data-val">6+ years</span></div>
+          </div>
+          <div class="driver-rationale">
+            <p>"Mine supply growing modestly but projected to plateau. AISC at $1,521/oz gives huge margins at $5,200 gold. Supply inelasticity means price must do the rationing. 6-year lag between price and new supply response."</p>
+          </div>
+          <div class="driver-verdict">SLIGHTLY BULLISH — Supply constrained but not critical</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4 & 5: Charts -->
+<section class="section" id="charts">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Price & Correlation Analysis</h2>
+    </div>
+
+    <!-- Gold Price Chart -->
+    <div class="chart-panel">
+      <div class="chart-panel-header">
+        <h3 class="chart-title">Gold Spot — 52-Week Price Action ($/oz)</h3>
+        <div class="chart-meta">
+          <span class="meta-tag">Weekly Closes</span>
+          <span class="meta-tag gold">+81.3% YoY</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="gldChart"></canvas>
+      </div>
+    </div>
+
+    <!-- DXY vs Gold -->
+    <div class="chart-panel">
+      <div class="chart-panel-header">
+        <h3 class="chart-title">Gold vs DXY — Inverse Correlation</h3>
+        <div class="chart-meta">
+          <span class="meta-tag">Dual Axis</span>
+          <span class="meta-tag negative">Negative Correlation</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="goldDxyChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Yield Curves -->
+    <div class="charts-row">
+      <div class="chart-panel half">
+        <div class="chart-panel-header">
+          <h3 class="chart-title">Treasury Yield Curve</h3>
+          <div class="chart-meta">
+            <span class="meta-tag">Feb 25, 2026</span>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="yieldCurveChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-panel half">
+        <div class="chart-panel-header">
+          <h3 class="chart-title">TIPS Real Yield Curve</h3>
+          <div class="chart-meta">
+            <span class="meta-tag">Feb 25, 2026</span>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="realYieldChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 6: Trade Signal -->
+<section class="section section-dark" id="signal">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Trade Signal & Positioning</h2>
+    </div>
+
+    <div class="signal-panel">
+      <div class="signal-main">
+        <div class="signal-badge-large bullish">
+          <span class="signal-icon">◆</span>
+          <div class="signal-text">
+            <span class="signal-direction">STRUCTURALLY BULLISH</span>
+            <span class="signal-conviction">HIGH CONVICTION LONG</span>
+          </div>
+          <div class="signal-score-box">
+            <span class="signal-score-num">+3.10</span>
+            <span class="signal-score-label">Composite</span>
+          </div>
+        </div>
+
+        <div class="levels-grid">
+          <div class="level-card support">
+            <span class="level-type">SUPPORT</span>
+            <span class="level-range">$4,800 — $5,000</span>
+            <span class="level-note">Scale-in zone</span>
+          </div>
+          <div class="level-card current">
+            <span class="level-type">CURRENT</span>
+            <span class="level-range">$5,204</span>
+            <span class="level-note">Spot price</span>
+          </div>
+          <div class="level-card resistance">
+            <span class="level-type">RESISTANCE</span>
+            <span class="level-range">$5,400 — $5,500</span>
+            <span class="level-note">Profit-taking zone</span>
+          </div>
+          <div class="level-card target">
+            <span class="level-type">YE TARGET</span>
+            <span class="level-range">$5,000 — $6,300</span>
+            <span class="level-note">Consensus range</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="signal-details-row">
+        <div class="signal-detail-card">
+          <h4>Wall Street Targets</h4>
+          <div class="target-list">
+            <div class="target-item">
+              <span class="target-bank">J.P. Morgan</span>
+              <span class="target-price">$5,055 <span class="target-note">Q4 base</span></span>
+            </div>
+            <div class="target-item">
+              <span class="target-bank">J.P. Morgan</span>
+              <span class="target-price">$6,300 <span class="target-note">Bull case</span></span>
+            </div>
+            <div class="target-item">
+              <span class="target-bank">Goldman Sachs</span>
+              <span class="target-price">$5,400 <span class="target-note">2026 target</span></span>
+            </div>
+            <div class="target-item">
+              <span class="target-bank">UBS</span>
+              <span class="target-price">$5,400 <span class="target-note">If uncertainty</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="signal-detail-card">
+          <h4>Position Sizing</h4>
+          <p class="sizing-text">Full allocation warranted at institutional level. Scale into dips toward $4,800–$5,000 support. Reduce on parabolic moves above $5,500 where profit-taking likely.</p>
+        </div>
+
+        <div class="signal-detail-card risk-card">
+          <h4>Key Risk Factors</h4>
+          <ul class="risk-list">
+            <li>Fed hawkish surprise reversal</li>
+            <li>Rapid geopolitical de-escalation</li>
+            <li>Sharp USD reversal rally</li>
+            <li>Margin call cascades (see Jan 27 CME margin hike)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 7: Central Bank Demand -->
+<section class="section" id="flows">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">05</span>
+      <h2 class="section-title">Central Bank Demand</h2>
+      <p class="section-subtitle">Gold overtook US Treasuries as world's largest reserve asset</p>
+    </div>
+
+    <div class="cb-grid">
+      <div class="chart-panel">
+        <div class="chart-panel-header">
+          <h3 class="chart-title">Annual Central Bank Purchases (tonnes)</h3>
+        </div>
+        <div class="chart-container">
+          <canvas id="cbChart"></canvas>
+        </div>
+      </div>
+
+      <div class="cb-buyers-panel">
+        <h3 class="chart-title">Top Buyers — 2025</h3>
+        <div class="buyer-list">
+          <div class="buyer-item">
+            <span class="buyer-rank">1</span>
+            <span class="buyer-name">Poland</span>
+            <span class="buyer-amount">102t</span>
+            <div class="buyer-bar" style="width: 100%"></div>
+          </div>
+          <div class="buyer-item">
+            <span class="buyer-rank">2</span>
+            <span class="buyer-name">Kazakhstan</span>
+            <span class="buyer-amount">52t</span>
+            <div class="buyer-bar" style="width: 51%"></div>
+          </div>
+          <div class="buyer-item">
+            <span class="buyer-rank">3</span>
+            <span class="buyer-name">Brazil</span>
+            <span class="buyer-amount">43t</span>
+            <div class="buyer-bar" style="width: 42%"></div>
+          </div>
+          <div class="buyer-item">
+            <span class="buyer-rank">4</span>
+            <span class="buyer-name">Turkey</span>
+            <span class="buyer-amount">27t</span>
+            <div class="buyer-bar" style="width: 26%"></div>
+          </div>
+          <div class="buyer-item">
+            <span class="buyer-rank">5</span>
+            <span class="buyer-name">China</span>
+            <span class="buyer-amount">27t</span>
+            <div class="buyer-bar" style="width: 26%"></div>
+          </div>
+          <div class="buyer-item">
+            <span class="buyer-rank">6</span>
+            <span class="buyer-name">Czech Republic</span>
+            <span class="buyer-amount">20t</span>
+            <div class="buyer-bar" style="width: 20%"></div>
+          </div>
+        </div>
+        <div class="cb-stat-highlight">
+          <span class="cb-stat-number">57%</span>
+          <span class="cb-stat-desc">of purchases were opaque / unreported</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 8: ETF Flow Tracker -->
+<section class="section section-dark" id="etf">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">06</span>
+      <h2 class="section-title">ETF Flow Tracker</h2>
+      <p class="section-subtitle">January 2026 — Record institutional inflows</p>
+    </div>
+
+    <div class="etf-grid">
+      <div class="etf-stat-card featured">
+        <span class="etf-stat-label">January Inflows</span>
+        <span class="etf-stat-value">$19B</span>
+        <span class="etf-stat-note">All-time monthly record</span>
+      </div>
+      <div class="etf-stat-card">
+        <span class="etf-stat-label">GLD Inflows</span>
+        <span class="etf-stat-value">$2.58B</span>
+        <span class="etf-stat-note">SPDR Gold Trust</span>
+      </div>
+      <div class="etf-stat-card">
+        <span class="etf-stat-label">Mining ETFs</span>
+        <span class="etf-stat-value">$3.62B</span>
+        <span class="etf-stat-note">Highest since 2009</span>
+      </div>
+      <div class="etf-stat-card">
+        <span class="etf-stat-label">Total AUM</span>
+        <span class="etf-stat-value">$669B</span>
+        <span class="etf-stat-note">All-time high</span>
+      </div>
+      <div class="etf-stat-card">
+        <span class="etf-stat-label">Holdings</span>
+        <span class="etf-stat-value">4,145t</span>
+        <span class="etf-stat-note">Tonnes in ETFs</span>
+      </div>
+      <div class="etf-stat-card">
+        <span class="etf-stat-label">Daily Volume</span>
+        <span class="etf-stat-value">$623B</span>
+        <span class="etf-stat-note">+52% m/m increase</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 9: Fiscal Debasement Monitor -->
+<section class="section" id="fiscal">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">07</span>
+      <h2 class="section-title">Fiscal Debasement Monitor</h2>
+      <p class="section-subtitle">The structural case for gold as the ultimate hard asset</p>
+    </div>
+
+    <div class="fiscal-grid">
+      <div class="fiscal-card">
+        <div class="fiscal-icon">⬛</div>
+        <span class="fiscal-label">US Federal Deficit</span>
+        <span class="fiscal-value">$1.9T</span>
+        <span class="fiscal-sub">5.8% of GDP — FY2026</span>
+      </div>
+      <div class="fiscal-card">
+        <div class="fiscal-icon">📈</div>
+        <span class="fiscal-label">Debt-to-GDP Trajectory</span>
+        <span class="fiscal-value">→ 140%</span>
+        <span class="fiscal-sub">By 2031 (CBO projection)</span>
+      </div>
+      <div class="fiscal-card">
+        <div class="fiscal-icon">💰</div>
+        <span class="fiscal-label">Interest Payments</span>
+        <span class="fiscal-value">3.8% GDP</span>
+        <span class="fiscal-sub">By 2030 — $2.1T/yr by 2036</span>
+      </div>
+      <div class="fiscal-card">
+        <div class="fiscal-icon">📊</div>
+        <span class="fiscal-label">CPI (Jan 2026)</span>
+        <span class="fiscal-value">2.4%</span>
+        <span class="fiscal-sub">Core: 2.5% — Approaching target</span>
+      </div>
+      <div class="fiscal-card">
+        <div class="fiscal-icon">🏛️</div>
+        <span class="fiscal-label">Fed Funds Rate</span>
+        <span class="fiscal-value">3.64%</span>
+        <span class="fiscal-sub">Target: 3.50–3.75%</span>
+      </div>
+      <div class="fiscal-card">
+        <div class="fiscal-icon">⚠️</div>
+        <span class="fiscal-label">IMF Warning</span>
+        <span class="fiscal-value">At Risk</span>
+        <span class="fiscal-sub">Fiscal sustainability flagged</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 10: Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="footer-logo">◆</span>
+        <span class="footer-brand-text">GOLD MACRO FUNDAMENTAL MODEL</span>
+      </div>
+      <div class="footer-disclaimer">
+        <p>This model is for informational and educational purposes only. Not financial advice. Past performance does not guarantee future results. All data is point-in-time and subject to revision.</p>
+      </div>
+      <div class="footer-sources">
+        <span class="footer-sources-label">Sources:</span>
+        <span>World Gold Council &bull; Federal Reserve &bull; BLS &bull; CME FedWatch &bull; CBO &bull; IMF &bull; LSEG Lipper &bull; S&amp;P Global</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="./app.js"></script>
+</body>
+</html>
