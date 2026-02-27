@@ -611,23 +611,23 @@ function setupScrollAnimations() {
 
 // ============ LIVE GOLD PRICE TICKER ============
 const GOLD_TICKER = {
-  basePrice: 5204.00,       // Anchor price set by hourly refresh
-  currentPrice: 5204.00,
-  previousPrice: 5204.00,
-  sessionOpen: 5183.00,     // Previous session close for delta calc
-  volatility: 0.00015,      // Realistic intraday vol (~$0.50-$1.50 per tick)
+  basePrice: 5187.00,       // Anchor price set by hourly refresh
+  currentPrice: 5187.00,
+  previousPrice: 5187.00,
+  sessionOpen: 5167.26,     // Previous session close for delta calc
+  volatility: 0.00008,      // Tight vol (~$0.30-$0.80 per tick)
   momentum: 0,
-  trend: 0.00002,           // Slight upward drift matching current bullish regime
+  trend: 0,                 // No drift — stays centered on base
   tickInterval: null,
   
-  // Ornstein-Uhlenbeck mean-reversion + momentum model
-  // More realistic than pure random walk — mimics actual market microstructure
+  // Ornstein-Uhlenbeck mean-reversion model
+  // Strong mean-reversion keeps price hugging the base between hourly refreshes
   nextTick() {
     const dt = 1;
-    const meanReversion = 0.005; // Pull back toward base price
-    const momentumDecay = 0.92;
+    const meanReversion = 0.04; // Strong pull back toward base price
+    const momentumDecay = 0.7;
     
-    // Mean-reverting component (prevents drift too far from base)
+    // Mean-reverting component (snaps back toward base quickly)
     const reversion = meanReversion * (this.basePrice - this.currentPrice) * dt;
     
     // Random shock (Gaussian approximation via Box-Muller)
@@ -636,18 +636,15 @@ const GOLD_TICKER = {
     const gaussian = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
     const shock = gaussian * this.basePrice * this.volatility;
     
-    // Momentum (autocorrelation in price changes)
-    this.momentum = this.momentum * momentumDecay + shock * 0.3;
-    
-    // Trend component
-    const trendComponent = this.basePrice * this.trend * dt;
+    // Momentum (light autocorrelation)
+    this.momentum = this.momentum * momentumDecay + shock * 0.15;
     
     // Combine
     this.previousPrice = this.currentPrice;
-    this.currentPrice += reversion + shock + this.momentum + trendComponent;
+    this.currentPrice += reversion + shock + this.momentum;
     
-    // Hard bounds: don't drift more than 0.5% from base
-    const maxDrift = this.basePrice * 0.005;
+    // Hard bounds: don't drift more than 0.15% from base (~$7.80 at $5187)
+    const maxDrift = this.basePrice * 0.0015;
     this.currentPrice = Math.max(this.basePrice - maxDrift, Math.min(this.basePrice + maxDrift, this.currentPrice));
     
     return this.currentPrice;
